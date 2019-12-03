@@ -1,0 +1,7 @@
+**/.DS_Store
+
+# ignore all logs
+*.log
+
+#ignore node_modules
+node_modules/
