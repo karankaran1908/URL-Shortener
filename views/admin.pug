@@ -1,0 +1,45 @@
+html
+    head
+        title= title
+        link(rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css")
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
+    body
+        div(class="ui attached stackable menu")
+            div(class="ui container")
+                div(class="header item")
+                    | Link Shortener Admin Panel
+                a(class="item")
+                    i(class="home icon")
+                    span Home
+        //- div(class="ui raised very padded text container segment")
+        div(class="ui statistics ui four column doubling stackable grid container small")
+            div(class="statistic column")
+            div(class="statistic column")
+                div(class="value")
+                    i(class="plane linkify icon small")
+                    span= itemCount
+                div(class="label")
+                    span Total Urls Shortened
+            div(class="statistic column")
+                div(class="value")
+                    i(class="chart line icon small")
+                    span= callCountSum
+                div(class="label")
+                    span Times URL Resolved
+            div(class="statistic column")
+        table( border='1', class='ui celled table stripped small')
+            thead
+                tr
+                    th(style="width:60%") Original Url
+                    th Shortened Url
+                    th Count
+                    th Last Used
+                    th Created On
+            tbody
+                each item,index in items
+                    tr
+                        td(style="max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;")= item.originalUrl
+                        td= item.shortenedUrl
+                        td= item.callCount
+                        td= item.lastUsed
+                        td= item.createdAt
