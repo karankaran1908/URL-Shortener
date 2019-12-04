@@ -1,0 +1,31 @@
+html
+    head
+        title Link Shortener
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+        link(rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css")
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
+        script(src='./includes/client.js')
+    body
+        .ui.large.top.fixed.hidden.menu
+          .ui.container
+            a.active.item Home
+            a.item Admin
+        div(style="margin-top: 6%;" class=" ui placeholder  raised very padded text container segment")
+            h2(class="ui header")
+                | URL Shortner
+            div(id="shortener_message")
+                //- .ui.negative.message.tiny
+                //-     .header
+                //-         | We&apos;re sorry we can&apos;t apply that discount
+                //-     p
+                //-         | That offer has expired
+            div
+                form.ui.form(id="shortener_form")
+                    .field(style="max-width: 40rem;")
+                        label Long URL
+                        input(type='text' id='shortener_form_long_url' placeholder='Long URL')
+                    //- i(style="transform: rotateZ(90deg)" class="icon exchange" )
+                    //- .field(style="max-width: 40rem;")
+                    //-     label Short URL
+                    //-     input(type='text' name='short-url' placeholder='Short URL')
+                    button.ui.button(type='button' id="shortener_form_submit") Submit
