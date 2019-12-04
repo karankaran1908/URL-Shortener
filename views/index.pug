@@ -8,24 +8,35 @@ html
     body
         .ui.large.top.fixed.hidden.menu
           .ui.container
-            a.active.item Home
-            a.item Admin
-        div(style="margin-top: 6%;" class=" ui placeholder  raised very padded text container segment")
-            h2(class="ui header")
-                | URL Shortner
-            div(id="shortener_message")
-                //- .ui.negative.message.tiny
-                //-     .header
-                //-         | We&apos;re sorry we can&apos;t apply that discount
-                //-     p
-                //-         | That offer has expired
+            a.active.item(href="/") Home
+            a.item(href="/admin") Admin
+        div(style="margin-top: 6%;" class="container")
             div
-                form.ui.form(id="shortener_form")
-                    .field(style="max-width: 40rem;")
-                        label Long URL
-                        input(type='text' id='shortener_form_long_url' placeholder='Long URL')
-                    //- i(style="transform: rotateZ(90deg)" class="icon exchange" )
-                    //- .field(style="max-width: 40rem;")
-                    //-     label Short URL
-                    //-     input(type='text' name='short-url' placeholder='Short URL')
-                    button.ui.button(type='button' id="shortener_form_submit") Submit
+                div(class="ui equal width stackable internally celled grid")
+                    div(class="center aligned row")
+                        div(class="column")
+                            h3
+                                | Use this to shorten any URL
+                            p
+                                | Enter a URL of your choice
+                            div
+                                form.ui.form(id="shortener_form")
+                                    div.inline.fields
+                                        .field(class="fourteen wide")
+                                            input(type='text' id='shortener_form_long_url' placeholder='Long URL')
+                                        .field(class="two wide")
+                                            button.ui.button(type='button' id="shortener_form_submit") Submit
+                            div.ui.center(id="shortener_message")
+                        div(class="column")
+                            h3
+                                | Use this to resolve a shortened URL
+                            p
+                                | Enter a shortened URL
+                            div
+                                form.ui.form(id="resolver_form")
+                                    div.inline.fields
+                                        .field(class="fourteen wide")
+                                            input(type='text' id='resolver_form_short_url' placeholder='Shortened URL')
+                                        .field(class="two wide")
+                                            button.ui.button(type='button' id="resolver_form_submit") Submit
+                            div.ui.center(id="resolver_message")

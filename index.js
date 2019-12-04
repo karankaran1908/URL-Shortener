@@ -10,7 +10,7 @@ const connectOptions = {
 // mongoose.Promise = global.Promise;
 mongoose.connect(mongoURI, connectOptions, (err, db) => {
   if (err) console.log(`Error connecting to mongo`, err);
-  console.log(`Connected to MongoDB`);
+  else console.log(`Connected to MongoDB`);
 });
 const app = express();
 app.use(
