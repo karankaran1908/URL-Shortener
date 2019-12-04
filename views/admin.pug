@@ -1,16 +1,14 @@
 html
     head
-        title= Link Shortener Admin
+        title Link Shortener Admin
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js')
         link(rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css")
         script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
     body
-        div(class="ui attached stackable menu")
-            div(class="ui container")
-                div(class="header item")
-                    | Link Shortener Admin Panel
-                a(class="item")
-                    i(class="home icon")
-                    span Home
+        .ui.large.top.fixed.hidden.menu
+          .ui.container
+            a.item(href="/") Home
+            a.item.active(href="/admin") Admin
         //- div(class="ui raised very padded text container segment")
         div(class="ui statistics ui four column doubling stackable grid container small")
             div(class="statistic column")

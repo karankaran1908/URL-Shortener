@@ -3,28 +3,22 @@ $(document).ready(function() {
   $('#shortener_form_submit').click(function(event) {
     event.preventDefault(); //prevent default action
     var longUrl = $('#shortener_form_long_url').val();
-    console.log(longUrl);
-    var post_url = `${server}/shortenUrl`;
-    var request_method = 'POST'; //get form GET/POST method
-    console.log({
-      originalUrl: longUrl
-    });
-
     $.ajax({
-      url: post_url,
-      type: 'POST',
-      dataType: 'json',
-      contentType: 'application/json',
-      data: {
-        originalUrl: longUrl
-      }
+      async: true,
+      crossDomain: true,
+      url: `${server}/shortenUrl`,
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      processData: false,
+      data: `{"originalUrl": "${longUrl}"\n}`
     })
       .done(function(response) {
-        console.log(response);
         showMessage(
           '#shortener_message',
           'Here is the shortened url',
-          jqXHR.responseText || 'Please try again',
+          response.shortenedUrl,
           'positive'
         );
       })
@@ -37,13 +31,43 @@ $(document).ready(function() {
         );
       });
   });
+
+  $('#resolver_form_submit').click(function(event) {
+    event.preventDefault(); //prevent default action
+    var shortUrl = $('#resolver_form_short_url').val();
+    $.ajax({
+      async: true,
+      crossDomain: true,
+      url: `${server}/resolveUrl?shortUrl=${shortUrl}`,
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+      .done(function(response) {
+        showMessage(
+          '#resolver_message',
+          'Here is the original url',
+          response.originalUrl,
+          'positive'
+        );
+      })
+      .fail(function(jqXHR, textStatus) {
+        showMessage(
+          '#resolver_message',
+          'Sorry! Some error occured',
+          jqXHR.responseText || 'Please try again',
+          'negative'
+        );
+      });
+  });
 });
 
 var showMessage = (parentDiv, title, message, type) => {
   console.log('show message', $(parentDiv));
   $(parentDiv).empty();
   $(parentDiv).append(`
-  <div class="ui ${type} message tiny">
+  <div class="ui ${type} message tiny" style="width: 85%;">
   <div class="header">
     ${title}
   </div>
