@@ -28,7 +28,7 @@ module.exports = app => {
     try {
       const { originalUrl } = req.body;
       if (!validUrl.isUri(originalUrl)) {
-        return res.status(404).json('Invalid Url');
+        return res.status(400).json('Invalid Url');
       }
       let item = await Url.findOne({
         originalUrl: originalUrl
@@ -94,6 +94,13 @@ module.exports = app => {
         itemCount: items.length,
         callCountSum: callCountSum[0].count
       });
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+  });
+  app.get('/', async function(req, res) {
+    try {
+      res.render('index', {});
     } catch (error) {
       return res.status(500).json(error);
     }

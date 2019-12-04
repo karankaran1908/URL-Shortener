@@ -13,9 +13,16 @@ mongoose.connect(mongoURI, connectOptions, (err, db) => {
   console.log(`Connected to MongoDB`);
 });
 const app = express();
-app.set('view engine', 'pug');
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
+
 app.use(bodyParser.json());
-require('./models/url.model.');
+app.set('view engine', 'pug');
+app.use('/includes', express.static('includes'));
+require('./models/url.model');
 require('./controllers/url.controller')(app);
 const PORT = 7000;
 app.listen(PORT, () => {
