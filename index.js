@@ -17,7 +17,7 @@ app.set('view engine', 'pug');
 app.use(bodyParser.json());
 require('./models/url.model.');
 require('./controllers/url.controller')(app);
-const PORT = 7000;
+const PORT = 8000;
 app.listen(PORT, () => {
   console.log(`Server started on port`, PORT);
 });
