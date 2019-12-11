@@ -30,4 +30,4 @@
 
 #Technologies Used:
 
-> Technologies used: AWS, Docker, mongoDB, Postman(for testing api endpoints while coding), Node.js, pug(Used template engine to produce html),PM2(process manager), Terraform(to create ec2 instance)
+> AWS, Docker, mongoDB, Postman(for testing api endpoints while coding), Node.js, pug(Used template engine to produce html),PM2(process manager), Terraform(to create ec2 instance)
