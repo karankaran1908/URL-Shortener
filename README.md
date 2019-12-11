@@ -25,9 +25,9 @@
 
 > Clearall
 
->> to delete all the records from the database.
+>> To delete all the records from the database.
 
 
 #Technologies Used:
 
-Technologies used: AWS, Docker, mongoDB, Postman(for testing api endpoints while coding), Node.js, pug(Used template engine to produce html),PM2(process manager), Terraform(to create ec2 instance)
+> Technologies used: AWS, Docker, mongoDB, Postman(for testing api endpoints while coding), Node.js, pug(Used template engine to produce html),PM2(process manager), Terraform(to create ec2 instance)
