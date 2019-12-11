@@ -3,17 +3,25 @@ const validUrl = require('valid-url');
 const helpers = require('../helpers.js');
 const Url = mongoose.model('Url');
 
-const baseUrl = 'http://applu.se';
+const baseUrl = 'http://18.225.37.80:8000';
 
 module.exports = app => {
-  app.get('/resolveUrl/', async (req, res) => {
+app.get('/clearAll/', async (req, res) => {
+    try {
+      await Url.deleteMany({});
+      return res.status(200).json('ok');
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+  }); 
+ app.get('/resolveUrl/', async (req, res) => {
     try {
       const shortUrl = req.query.shortUrl;
       let urlCode = shortUrl.split('/').pop();
       const item = await Url.findOne({
         urlCode: urlCode
       });
-      if (item) {
+ if (item) {
         item.callCount = item.callCount + 1;
         await item.save();
         return res.status(200).json(item);
@@ -101,6 +109,24 @@ module.exports = app => {
   app.get('/', async function(req, res) {
     try {
       res.render('index', {});
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+  });
+	app.get('/:urlCode/', async (req, res) => {
+    try {
+      const urlCode = req.params.urlCode;
+      const item = await Url.findOne({
+        urlCode: urlCode
+      });
+      if (item) {
+        item.callCount = item.callCount + 1;
+        await item.save();
+        return res.redirect(item.originalUrl);
+        // return res.status(200).json(item);
+      } else {
+        return res.status(404).json('Not Found');
+      }
     } catch (error) {
       return res.status(500).json(error);
     }
