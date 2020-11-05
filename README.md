@@ -1,6 +1,6 @@
 # URL-Shortener
 
-# Functionalities added
+# Functionalities added:
 
 > Shorten a URL
 
@@ -30,4 +30,4 @@
 
 # Technologies Used:
 
-GCP, Docker, mongoDB, Postman(for testing api endpoints while coding), Node.js, pug(Used template engine to produce html),PM2(process manager), Terraform
+> GCP, Docker, mongoDB, Postman(for testing api endpoints while coding), Node.js, pug(Used template engine to produce html),PM2(process manager), Terraform
