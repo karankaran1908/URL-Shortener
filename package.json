@@ -8,7 +8,8 @@
     "mongoose": "^5.7.12",
     "pug": "^2.0.4",
     "shortid": "^2.2.15",
-    "valid-url": "^1.0.9"
+    "valid-url": "^1.0.9",
+    "redis": "latest"
   },
   "scripts": {
     "start": "node index.js "

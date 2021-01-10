@@ -11,7 +11,7 @@ const { promisify } = require("util");
 const getAsync = promisify(client.get).bind(client);
 const setAsync = promisify(client.set).bind(client);
 
-const baseUrl = 'http://18.225.37.80:8000';
+const baseUrl = 'http://3.85.92.118:8000';
 const flushdbAsync = promisify(client.flushdb).bind(client);
 
 module.exports = app => {
@@ -28,19 +28,22 @@ app.get('/clearAll/', async (req, res) => {
     try {
       const shortUrl = req.query.shortUrl;
       let urlCode = shortUrl.split('/').pop();
-      let resolveFromRedis = await getAsync('urlCode');
+	    console.log(urlCode);
+      let resolveFromRedis = await getAsync(urlCode);
+	    console.log(resolveFromRedis)
 	    if(resolveFromRedis){
-		await Url.findAndUpdate({
+		await Url.update({
 		urlCode:urlCode
 		},{
 			$inc: { callCount : 1 }
 		});
-        return res.status(200).json(item);
+        return res.status(200).json({originalUrl:resolveFromRedis});
       } else {
         return res.status(404).json('Not Found');
       }
     } catch (error) {
-      return res.status(500).json(error);
+      console.log(error);
+	    return res.status(500).json(error);
     }
   });
   app.post('/shortenUrl', async (req, res) => {
@@ -50,7 +53,7 @@ app.get('/clearAll/', async (req, res) => {
         return res.status(400).json('Invalid Url');
       }
        let resolveFromRedis = await getAsync('urlCode');
-      if (item) {
+      if (resolveFromRedis) {
         return res.status(200).json({shortenedUrl:resolveFromRedis,originalUrl});
       }
       const count = await Url.count();
@@ -71,7 +74,7 @@ app.get('/clearAll/', async (req, res) => {
           callCount: 0,
           lastUsed: new Date()
         });
-	      await redis.setAsync(urlCode,originalUrl);
+	      await setAsync(urlCode,originalUrl);
         console.log(item);
         await item.save();
         return res.status(200).json(item);
