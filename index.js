@@ -2,10 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-const mongoURI = 'mongodb://localhost/url-shortner';
+const mongoURI = 'mongodb://url-mongo/url-shortner';
 const connectOptions = {
   keepAlive: true
 };
+console.log('mongoURI=>',mongoURI);
 //Connect to MongoDB
 // mongoose.Promise = global.Promise;
 mongoose.connect(mongoURI, connectOptions, (err, db) => {

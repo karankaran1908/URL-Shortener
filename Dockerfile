@@ -1,19 +1,15 @@
-FROM node:12
+FROM node:latest
 
-# Create app directory
-WORKDIR /usr/src/app
+#LABEL author="Dan Wahlin"
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
+ENV NODE_ENV=development 
+#ENV PORT=8000
 
-RUN npm install
-# If you are building your code for production
-# RUN npm ci --only=production
+COPY      . /var/www
+WORKDIR   /var/www
 
-# Bundle app source
-COPY . .
+RUN       npm install
 
-EXPOSE 8080
-CMD [ "node", "index.js" ]
+#EXPOSE $PORT
+
+#ENTRYPOINT ["npm", "start"]

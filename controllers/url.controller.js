@@ -2,13 +2,23 @@ const mongoose = require('mongoose');
 const validUrl = require('valid-url');
 const helpers = require('../helpers.js');
 const Url = mongoose.model('Url');
-
+const redis = require("redis");                                                                                         const client = redis.createClient();                                                                                                                                                                                                            client.on("error", function(error) {                                                                                      console.error(error);                                                                                                 });                                                                                                                                                                                                                                             const { promisify } = require("util");                                                                                  const getAsync = promisify(client.get).bind(client);                                                                    const setAsync = promisify(client.set).bind(client);  
+const client = redis.createClient({host:"url-redis"});                                                                                                                                                                                                            client.on("error", function(error) {                                                                                      console.error(error);                                                                                                 });                                                                                                                                                                                                                                             const { promisify } = require("util");                                                                                  const getAsync = promisify(client.get).bind(client);                                                                    const setAsync = promisify(client.set).bind(client);
+client.on("error", function(error) {  
+	console.error(error);                                                                                                 
+});
+const { promisify } = require("util");
+const getAsync = promisify(client.get).bind(client);                                               
+const setAsync = promisify(client.set).bind(client);
+const client = redis.createClient();
 const baseUrl = 'http://18.225.37.80:8000';
+const flushdbAsync = promisify(client.flushdb).bind(client);
 
 module.exports = app => {
 app.get('/clearAll/', async (req, res) => {
     try {
       await Url.deleteMany({});
+	    await clushDbAsync()
       return res.status(200).json('ok');
     } catch (error) {
       return res.status(500).json(error);
@@ -18,12 +28,13 @@ app.get('/clearAll/', async (req, res) => {
     try {
       const shortUrl = req.query.shortUrl;
       let urlCode = shortUrl.split('/').pop();
-      const item = await Url.findOne({
-        urlCode: urlCode
-      });
- if (item) {
-        item.callCount = item.callCount + 1;
-        await item.save();
+      let resolveFromRedis = await getAsync('urlCode');
+	    if(resolveFromRedis){
+		await Url.findAndUpdate({
+		urlCode:urlCode
+		},{
+			$inc: { callCount : 1 }
+		});
         return res.status(200).json(item);
       } else {
         return res.status(404).json('Not Found');
@@ -38,11 +49,9 @@ app.get('/clearAll/', async (req, res) => {
       if (!validUrl.isUri(originalUrl)) {
         return res.status(400).json('Invalid Url');
       }
-      let item = await Url.findOne({
-        originalUrl: originalUrl
-      });
+       let resolveFromRedis = await getAsync('urlCode');
       if (item) {
-        return res.status(200).json(item);
+        return res.status(200).json({shortenedUrl:resolveFromRedis,originalUrl});
       }
       const count = await Url.count();
       if (count == 3844) {
@@ -62,6 +71,7 @@ app.get('/clearAll/', async (req, res) => {
           callCount: 0,
           lastUsed: new Date()
         });
+	      await redis.setAsync(urlCode,originalUrl);
         console.log(item);
         await item.save();
         return res.status(200).json(item);

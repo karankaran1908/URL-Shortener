@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+
+  url-node:
+    image: url-node
+    container_name: url-node
+    ports:
+      - "8000:8000"
+    depends_on: 
+      - url-mongo
+    command: npm start   
+      
+  url-mongo:
+    image: mongo
+    hostname: url-mongo
+    container_name: url-mongo
+
+  url-redis:
+    image: redis
+    hostname: url-redis
+    container_name: url-redis
