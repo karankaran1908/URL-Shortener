@@ -2,14 +2,15 @@ const mongoose = require('mongoose');
 const validUrl = require('valid-url');
 const helpers = require('../helpers.js');
 const Url = mongoose.model('Url');
-const redis = require("redis");                                                                                                                                                                                                            client.on("error", function(error) {                                                                                      console.error(error);                                                                                                 });                                                                                                                                                                                                                                             const { promisify } = require("util");                                                                                  const getAsync = promisify(client.get).bind(client);                                                                    const setAsync = promisify(client.set).bind(client);  
-const client = redis.createClient({host:"url-redis"});                                                                                                                                                                                                            client.on("error", function(error) {                                                                                      console.error(error);                                                                                                 });                                                                                                                                                                                                                                             const { promisify } = require("util");                                                                                  const getAsync = promisify(client.get).bind(client);                                                                    const setAsync = promisify(client.set).bind(client);
-client.on("error", function(error) {  
-	console.error(error);                                                                                                 
+const redis = require("redis");                                                                                                                                                                                                            
+const client = redis.createClient({host:"url-redis"});
+client.on("error", function(error) {
+	console.error(error);
 });
 const { promisify } = require("util");
-const getAsync = promisify(client.get).bind(client);                                               
+const getAsync = promisify(client.get).bind(client);
 const setAsync = promisify(client.set).bind(client);
+
 const baseUrl = 'http://18.225.37.80:8000';
 const flushdbAsync = promisify(client.flushdb).bind(client);
 
