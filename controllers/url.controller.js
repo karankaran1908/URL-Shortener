@@ -52,7 +52,7 @@ app.get('/clearAll/', async (req, res) => {
       if (!validUrl.isUri(originalUrl)) {
         return res.status(400).json('Invalid Url');
       }
-       let resolveFromRedis = await getAsync('urlCode');
+       let resolveFromRedis = await getAsync(originalUrl);
       if (resolveFromRedis) {
         return res.status(200).json({shortenedUrl:resolveFromRedis,originalUrl});
       }
