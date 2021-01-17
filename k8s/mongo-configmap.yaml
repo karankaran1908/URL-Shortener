@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: url-mongo-config
+  labels:
+    app: url-mongo
+data:
+  MONGO_DB: mongo
+  MONGO_USER: mongo
+  MONGO_PASSWORD: mongo 
