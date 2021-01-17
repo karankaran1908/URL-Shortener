@@ -13,7 +13,7 @@ spec:
         app: url-mongo
     spec:
       containers:
-      - name: master
+      - name: url-mongo
         image: mongo
         ports:
         - containerPort: 5432
