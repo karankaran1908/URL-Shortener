@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: url-node
+  name: url-node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: url-node
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: url-node
+    spec:
+      containers:
+      - args:
+        - npm
+        - start
+        image: url-node
+        imagePullPolicy: ""
+        name: url-node
+        ports:
+        - containerPort: 8000
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}
