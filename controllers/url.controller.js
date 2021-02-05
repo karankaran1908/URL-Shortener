@@ -18,8 +18,8 @@ module.exports = app => {
 app.get('/clearAll/', async (req, res) => {
     try {
       await Url.deleteMany({});
-	    await clushDbAsync()
-      return res.status(200).json('ok');
+	    await flushDbAsync();
+      return res.status(200).json({success:true});
     } catch (error) {
       return res.status(500).json(error);
     }
@@ -61,6 +61,7 @@ app.get('/clearAll/', async (req, res) => {
         item = Url.findOne().sort({ lastUsed: -1 });
         item.originalUrl = originalUrl;
         item.shortenedUrl = `${baseUrl}/${item.urlCode}`;
+	item.callCount=0;
         await item.save();
         return res.status(200).json(item);
       } else {
