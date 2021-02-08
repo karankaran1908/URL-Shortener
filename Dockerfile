@@ -1,6 +1,6 @@
 FROM node:latest
 
-#LABEL author="Dan Wahlin"
+
 
 ENV NODE_ENV=development 
 #ENV PORT=8000
