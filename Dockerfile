@@ -1,4 +1,4 @@
-FROM node:16.1.0-buster-slim
+FROM node:16.6.2-buster-slim
 
 
 
